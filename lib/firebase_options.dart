@@ -41,23 +41,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAqj_gXZeTpsNcnAo-o6yilH8wV3afTnoc',
-    appId: '1:639373845940:web:0602856a97d60e327f3ee1',
-    messagingSenderId: '639373845940',
-    projectId: 'attendance-app-6638e',
-    authDomain: 'attendance-app-6638e.firebaseapp.com',
-    storageBucket: 'attendance-app-6638e.firebasestorage.app',
-    measurementId: 'G-9D604ZPX9T',
+    apiKey: 'AIzaSyBtxy507GnesmRiN-NnUv1MlEdCWvJ3Yv4',
+    appId: '1:852330392434:web:03b6e9699039c2f9e7cbeb',
+    messagingSenderId: '852330392434',
+    projectId: 'attendance-app-manual',
+    authDomain: 'attendance-app-manual.firebaseapp.com',
+    storageBucket: 'attendance-app-manual.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAhtVa9G76hjyk9fLluyrk-EArZmhJ3z-8',
-    appId: '1:639373845940:android:98760f06195335a27f3ee1',
-    messagingSenderId: '639373845940',
-    projectId: 'attendance-app-6638e',
-    storageBucket: 'attendance-app-6638e.firebasestorage.app',
+    apiKey: 'AIzaSyBAD_KSS5aoudHl4Qonw3WnHpp5gE1Ch7g',
+    appId: '1:852330392434:android:a4758898d2d59a0ee7cbeb',
+    messagingSenderId: '852330392434',
+    projectId: 'attendance-app-manual',
+    storageBucket: 'attendance-app-manual.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCqB_hyHK6nZHWhGGMvtNU8AYfadt2W_BM',
     appId: '1:639373845940:ios:247e681abb1b6a887f3ee1',
@@ -66,7 +64,6 @@ class DefaultFirebaseOptions {
     storageBucket: 'attendance-app-6638e.firebasestorage.app',
     iosBundleId: 'com.example.attend',
   );
-
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCqB_hyHK6nZHWhGGMvtNU8AYfadt2W_BM',
     appId: '1:639373845940:ios:247e681abb1b6a887f3ee1',

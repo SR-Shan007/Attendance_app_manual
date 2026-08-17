@@ -1,55 +1,50 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// Mutable model used specifically inside the manual attendance checklist UI
+class StudentAttendanceItem {
+  final String id; // Student's UID or custom student ID
+  final String name;
+  final String? studentCode; // E.g., University ID
+  int totalAttendance;
+  bool isPresent;
+
+  StudentAttendanceItem({
+    required this.id,
+    required this.name,
+    this.studentCode,
+    required this.totalAttendance,
+    this.isPresent = false,
+  });
+}
+
+/// Persistent record model stored in Firestore under sessions/{sessionId}/records/{studentId}
 class AttendanceRecord {
-  final String id;
-  final String sessionId;
-  final String courseId;
-  final String courseName;
   final String studentId;
-  final String studentUid;
   final String studentName;
+  final bool isPresent;
   final DateTime timestamp;
 
-  const AttendanceRecord({
-    required this.id,
-    required this.sessionId,
-    required this.courseId,
-    required this.courseName,
+  AttendanceRecord({
     required this.studentId,
-    required this.studentUid,
     required this.studentName,
+    required this.isPresent,
     required this.timestamp,
   });
 
-  factory AttendanceRecord.fromFirestore(DocumentSnapshot doc) {
-    final map = (doc.data() as Map<String, dynamic>?) ?? {};
+  factory AttendanceRecord.fromMap(Map<String, dynamic> map, String documentId) {
     return AttendanceRecord(
-      id: doc.id,
-      sessionId: map["sessionId"] ?? "",
-      courseId: map["courseId"] ?? "",
-      courseName: map["courseName"] ?? "",
-      studentId: map["studentId"] ?? "",
-      studentUid: map["studentUid"] ?? "",
-      studentName: map["studentName"] ?? "",
-      timestamp: _parseDateTime(map["timestamp"]),
+      studentId: documentId,
+      studentName: map['studentName'] ?? 'Unknown',
+      isPresent: map['isPresent'] ?? false,
+      timestamp: (map['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      "sessionId": sessionId,
-      "courseId": courseId,
-      "courseName": courseName,
-      "studentId": studentId,
-      "studentUid": studentUid,
-      "studentName": studentName,
-      "timestamp": Timestamp.fromDate(timestamp),
+      'studentName': studentName,
+      'isPresent': isPresent,
+      'timestamp': Timestamp.fromDate(timestamp),
     };
-  }
-
-  static DateTime _parseDateTime(dynamic value) {
-    if (value is Timestamp) return value.toDate();
-    if (value is String) return DateTime.tryParse(value) ?? DateTime.now();
-    return DateTime.now();
   }
 }

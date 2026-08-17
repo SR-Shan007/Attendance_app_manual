@@ -1,50 +1,40 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Course {
   final String id;
-  final String name;
+  final String title;
+  final String code;
   final String joinCode;
   final String teacherId;
-  final String teacherName;
-  final String department;
-  final List<String> enrolledStudents;
-  final DateTime? createdAt;
+  final int totalSessions; // Total number of attendance sessions held so far
 
   Course({
     required this.id,
-    required this.name,
+    required this.title,
+    required this.code,
     required this.joinCode,
     required this.teacherId,
-    required this.teacherName,
-    this.department = '',
-    this.enrolledStudents = const [],
-    this.createdAt,
+    this.totalSessions = 0,
   });
 
-  factory Course.fromFirestore(DocumentSnapshot doc) {
-    final data = (doc.data() as Map<String, dynamic>?) ?? {};
+  // Create a Course object from a Firestore document snapshot
+  factory Course.fromMap(Map<String, dynamic> map, String documentId) {
     return Course(
-      id: doc.id,
-      name: data['courseName'] ?? data['name'] ?? '',
-      joinCode: data['joinCode'] ?? data['courseCode'] ?? '',
-      teacherId: data['teacherId'] ?? '',
-      teacherName: data['teacherName'] ?? '',
-      department: data['department'] ?? '',
-      enrolledStudents: List<String>.from(data['enrolledStudents'] ?? []),
-      createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
+      id: documentId,
+      title: map['title'] ?? '',
+      code: map['code'] ?? '',
+      joinCode: map['joinCode'] ?? '',
+      teacherId: map['teacherId'] ?? '',
+      totalSessions: map['totalSessions'] ?? 0,
     );
   }
 
+  // Convert a Course object to a Map for saving to Firestore
   Map<String, dynamic> toMap() {
     return {
-      'courseName': name,
+      'title': title,
+      'code': code,
       'joinCode': joinCode,
-      'courseCode': joinCode,
       'teacherId': teacherId,
-      'teacherName': teacherName,
-      'department': department,
-      'enrolledStudents': enrolledStudents,
-      'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : FieldValue.serverTimestamp(),
+      'totalSessions': totalSessions,
     };
   }
 }
